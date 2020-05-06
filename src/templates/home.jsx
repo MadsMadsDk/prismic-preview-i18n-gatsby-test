@@ -18,7 +18,7 @@ Home.defaultProps = {}
 
 Home.propTypes = {}
 
-export const homeQuery = graphql`
+export const query = graphql`
   query HomeQuery($lang: String!, $uid: String!) {
     prismic {
       index(lang: $lang, uid: $uid) {
