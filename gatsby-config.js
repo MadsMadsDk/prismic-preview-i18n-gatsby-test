@@ -26,24 +26,26 @@ module.exports = {
         path: "/preview", // (optional, default: /preview)
         previews: true, // (optional, default: false)
         shortenUrlLangs: true,
+        passContextKeys: ["isProduction"],
+        extraPageFields: "isProduction",
         pages: [
           {
             type: "Index",
-            match: "/:lang?",
-            component: require.resolve("./src/templates/home.jsx"),
-            langs: ["da-dk", "en-gb"],
-          },
-          {
-            type: "Page",
-            match: "/:lang/:uid",
-            component: require.resolve("./src/templates/page.jsx"),
-            langs: ["en-gb"],
-          },
-          {
-            type: "Page",
-            match: "/:uid",
-            component: require.resolve("./src/templates/page.jsx"),
+            match: "/",
             langs: ["da-dk"],
+            component: require.resolve("./src/templates/home.jsx"),
+          },
+          {
+            type: "Index",
+            match: "/en",
+            langs: ["en-gb"],
+            component: require.resolve("./src/templates/home.jsx"),
+          },
+          {
+            type: "Page",
+            match: "/:lang?/:uid",
+            langs: ["da-dk", "en-gb"],
+            component: require.resolve("./src/templates/page.jsx"),
           },
         ],
         sharpKeys: [

@@ -26,9 +26,8 @@ const linkResolver = (doc) => {
       urlParts = `${doc.uid}`
       break
     case "index":
-      break
     default:
-      urlParts = `${doc.uid}`
+      urlParts = ``
   }
 
   return `${baseUrl === "" ? "/" : `${baseUrl}/`}${urlParts}`

@@ -1,20 +1,24 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
-import get from "lodash-es/get"
 import Content from "components/Content"
 import Layout from "components/Layout"
 
-function Page({ data: { prismic }, ...props }) {
-  const sharpImage = get(prismic, "page.imageSharp.childImageSharp.desktop")
+function Page({
+  data: {
+    prismic: { page },
+  },
+  ...props
+}) {
+  if (!page) return null
   return (
     <Layout>
-      <Content content={prismic.page.page_title} />
-      <Content content={prismic.page.content} />
-      {sharpImage ? (
-        <Img fixed={sharpImage} />
+      <Content content={page.page_title} />
+      <Content content={page.content} />
+      {page.imageSharp ? (
+        <Img fixed={page.imageSharp.childImageSharp.main} />
       ) : (
-        <img src={get(prismic, "page.image.url")} alt="" />
+        <img src={page.image.url} alt={page.image.alt} />
       )}
     </Layout>
   )
@@ -27,19 +31,16 @@ Page.defaultProps = {}
 Page.propTypes = {}
 
 export const query = graphql`
-  query PageQuery($lang: String!, $uid: String!) {
+  query PageQuery($lang: String!, $uid: String!, $isProduction: Boolean!) {
     prismic {
       page(lang: $lang, uid: $uid) {
         content
         page_title
         image
-        imageSharp {
+        imageSharp @include(if: $isProduction) {
           childImageSharp {
             id
-            desktop: fixed(width: 1920) {
-              ...GatsbyImageSharpFixed
-            }
-            mobile: fixed(width: 900) {
+            main: fixed(width: 1200) {
               ...GatsbyImageSharpFixed
             }
           }
