@@ -3,11 +3,17 @@ import { graphql } from "gatsby"
 import Layout from "components/Layout"
 import Content from "components/Content"
 
-function Home({ data: { prismic }, ...props }) {
+function Home({
+  data: {
+    prismic: { index },
+  },
+  ...props
+}) {
+  if (!index) return null
   return (
     <Layout>
-      <Content content={prismic.index.page_title} />
-      <Content content={prismic.index.content} />
+      <Content content={index.page_title} />
+      <Content content={index.content} />
     </Layout>
   )
 }

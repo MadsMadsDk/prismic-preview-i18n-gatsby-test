@@ -27,7 +27,6 @@ module.exports = {
         previews: true, // (optional, default: false)
         shortenUrlLangs: true,
         passContextKeys: ["isProduction"],
-        extraPageFields: "isProduction",
         pages: [
           {
             type: "Index",
